@@ -8,6 +8,9 @@ if st.button("Fetch Latest Data"):
     fetch_powerball_data()
     st.success("Data downloaded!")
 
+st.write(f"Loaded {len(draws)} draws")
+st.write(draws[:5])  # Show sample
+
 if st.button("Pick Numbers"):
     draws = load_data('powerball_last_year.csv')
     numbers = pick_numbers(draws)
