@@ -10,5 +10,7 @@ if st.button("Fetch Latest Data"):
 
 if st.button("Pick Numbers"):
     draws = load_data('powerball_last_year.csv')
+    numbers = pick_numbers(draws)
     st.write("Suggested Numbers:")
-    pick_numbers(draws)
+    st.write(numbers)
+
