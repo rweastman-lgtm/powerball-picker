@@ -8,9 +8,6 @@ if st.button("Fetch Latest Data"):
     fetch_powerball_data()
     st.success("Data downloaded!")
 
-st.write(f"Loaded {len(draws)} draws")
-st.write(draws[:5])  # Show sample
-
 draws = load_data('powerball_last_year.csv')
 st.write(f"Loaded {len(draws)} draws")
 st.write(draws[:5])  # Show sample draws
