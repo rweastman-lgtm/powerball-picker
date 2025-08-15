@@ -8,9 +8,21 @@ def fetch_powerball_data():
     with open('powerball_last_year.csv', 'w') as f:
         f.write("DrawDate,Numbers\n2025-08-10,5 12 23 34 56 22")
 
-def load_data(filepath):
-    df = pd.read_csv(filepath)
-    draws = [list(map(int, row.split())) for row in df['Numbers']]
+def load_data(filename):
+    import csv
+    draws = []
+    try:
+        with open(filename, newline='') as csvfile:
+            reader = csv.reader(csvfile)
+            for row in reader:
+                try:
+                    nums = [int(n) for n in row if n.isdigit()]
+                    if len(nums) >= 6:
+                        draws.append(nums[:6])
+                except ValueError:
+                    continue
+    except FileNotFoundError:
+        print(f"File {filename} not found.")
     return draws
 
 def pick_numbers(draws):
