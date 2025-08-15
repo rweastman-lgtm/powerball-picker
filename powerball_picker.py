@@ -14,10 +14,13 @@ def load_data(filepath):
     return draws
 
 def pick_numbers(draws):
-    # Simple frequency-based picker
     from collections import Counter
+    import random
+
     flat = [num for draw in draws for num in draw]
     freq = Counter(flat)
     top = [num for num, _ in freq.most_common(5)]
     powerball = random.randint(1, 26)
+    return top + [powerball]
+
     print("Your numbers:", top + [powerball])
