@@ -14,8 +14,10 @@ st.write(draws[:5])  # Show sample
 
 if st.button("Pick Numbers"):
     numbers = pick_numbers(draws)
-    st.write("Suggested Numbers:")
-    st.write(numbers)
+    st.write("🎯 Suggested Numbers:")
+    st.write(f"Main: {numbers[:-1]}")
+    st.write(f"Powerball: {numbers[-1]}")
+
 
 
 
