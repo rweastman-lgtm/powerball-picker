@@ -14,16 +14,18 @@ def load_data(filename):
     try:
         with open(filename, newline='') as csvfile:
             reader = csv.reader(csvfile)
+            next(reader)  # Skip header
             for row in reader:
                 try:
-                    nums = [int(n) for n in row if n.isdigit()]
-                    if len(nums) >= 6:
-                        draws.append(nums[:6])
+                    nums = [int(n) for n in row[1].split()]
+                    if len(nums) == 6:
+                        draws.append(nums)
                 except ValueError:
                     continue
     except FileNotFoundError:
         print(f"File {filename} not found.")
     return draws
+
 
 def pick_numbers(draws):
     from collections import Counter
