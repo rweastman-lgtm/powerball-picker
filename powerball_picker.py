@@ -32,6 +32,7 @@ def fetch_powerball_data():
             writer.writerow([date, nums])
     print(f"✅ Saved {len(data)} draws to powerball_last_year.csv")
 
+
 def load_data(filename):
     import csv
     draws = []
