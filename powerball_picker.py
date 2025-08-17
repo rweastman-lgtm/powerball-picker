@@ -48,8 +48,13 @@ def pick_numbers(draws):
     main_nums = []
     powerballs = []
     for draw in draws:
-        main_nums.extend(draw[:5])
-        powerballs.append(draw[5])
+        if len(draw) == 6:
+            main_nums.extend(draw[:5])
+            powerballs.append(draw[5])
+
+    if not main_nums or not powerballs:
+        print("⚠️ No valid numbers found in draw data.")
+        return []
 
     main_freq = Counter(main_nums)
     powerball_freq = Counter(powerballs)
