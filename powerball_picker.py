@@ -24,8 +24,12 @@ def fetch_powerball_data():
         writer.writerow(["DrawDate", "Numbers"])
         for draw in data:
             date = draw["field_draw_date"]
-            nums = draw["field_winning_numbers"].replace(",", " ")
-            writer.writerow([date, nums])
+         import re  # Add at the top if not already present
+
+nums_raw = draw["field_winning_numbers"]
+nums = re.findall(r'\d+', nums_raw)
+writer.writerow([date, " ".join(nums)])
+
     print(f"✅ Saved {len(data)} draws to powerball_last_year.csv")
     return data
 
