@@ -11,12 +11,10 @@ def fetch_powerball_data():
     base_url = "https://www.powerball.com/api/v1/numbers/powerball"
     end_date = datetime.today()
     start_date = end_date - timedelta(days=365)
-
     params = {
         "start": start_date.strftime("%Y-%m-%d"),
         "end": end_date.strftime("%Y-%m-%d")
     }
-
     response = requests.get(base_url, params=params)
     if response.status_code != 200:
         print("Failed to fetch data.")
@@ -28,10 +26,10 @@ def fetch_powerball_data():
         writer.writerow(["DrawDate", "Numbers"])
         for draw in data:
             date = draw["field_draw_date"]
-            nums = draw["field_winning_numbers"].replace(",", "")
+            nums = draw["field_winning_numbers"].replace(",", " ")
             writer.writerow([date, nums])
     print(f"✅ Saved {len(data)} draws to powerball_last_year.csv")
-
+    return data
 
 def load_data(filename):
     import csv
