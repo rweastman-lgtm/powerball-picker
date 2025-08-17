@@ -7,10 +7,12 @@ def fetch_powerball_data():
     base_url = "https://www.powerball.com/api/v1/numbers/powerball"
     end_date = datetime.today()
     start_date = end_date - timedelta(days=365)
+
     params = {
         "start": start_date.strftime("%Y-%m-%d"),
         "end": end_date.strftime("%Y-%m-%d")
     }
+
     response = requests.get(base_url, params=params)
     if response.status_code != 200:
         print("❌ Failed to fetch data.")
@@ -51,7 +53,6 @@ def pick_numbers(draws):
         if len(draw) == 6:
             main_nums.extend(draw[:5])
             powerballs.append(draw[5])
-
     if not main_nums or not powerballs:
         print("⚠️ No valid numbers found in draw data.")
         return []
