@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.append(os.path.dirname(__file__))
+
 import streamlit as st
 from powerball_picker import fetch_powerball_data, load_data, pick_numbers
 
@@ -13,7 +17,6 @@ if numbers:
     st.write(f"Powerball: {numbers[-1]}")
 else:
     st.warning("No valid Powerball numbers could be generated. Please check the data source.")
-
 
 
 
