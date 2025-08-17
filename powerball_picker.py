@@ -1,11 +1,7 @@
-import pandas as pd
-import requests
-from bs4 import BeautifulSoup
-import random
-
 import requests
 import csv
 from datetime import datetime, timedelta
+from collections import Counter
 
 def fetch_powerball_data():
     base_url = "https://www.powerball.com/api/v1/numbers/powerball"
@@ -17,8 +13,8 @@ def fetch_powerball_data():
     }
     response = requests.get(base_url, params=params)
     if response.status_code != 200:
-        print("Failed to fetch data.")
-        return
+        print("❌ Failed to fetch data.")
+        return []
 
     data = response.json()
     with open("powerball_last_year.csv", "w", newline="") as f:
@@ -32,7 +28,6 @@ def fetch_powerball_data():
     return data
 
 def load_data(filename):
-    import csv
     draws = []
     try:
         with open(filename, newline='') as csvfile:
@@ -46,18 +41,27 @@ def load_data(filename):
                 except ValueError:
                     continue
     except FileNotFoundError:
-        print(f"File {filename} not found.")
+        print(f"❌ File {filename} not found.")
     return draws
 
-
 def pick_numbers(draws):
-    from collections import Counter
-    import random
+    main_nums = []
+    powerballs = []
+    for draw in draws:
+        main_nums.extend(draw[:5])
+        powerballs.append(draw[5])
 
-    flat = [num for draw in draws for num in draw]
-    freq = Counter(flat)
-    top = [num for num, _ in freq.most_common(5)]
-    powerball = random.randint(1, 26)
-    return top + [powerball]
+    main_freq = Counter(main_nums)
+    powerball_freq = Counter(powerballs)
 
-    print("Your numbers:", top + [powerball])
+    top_main = [num for num, _ in main_freq.most_common(5)]
+    top_powerball = powerball_freq.most_common(1)[0][0]
+
+    print("🎯 Statistically picked numbers:", top_main + [top_powerball])
+    return top_main + [top_powerball]
+
+if __name__ == "__main__":
+    fetch_powerball_data()
+    draws = load_data("powerball_last_year.csv")
+    if draws:
+        pick_numbers(draws)
