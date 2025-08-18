@@ -4,7 +4,7 @@ from powerball_picker.core import fetch_powerball_data, load_data, pick_numbers
 st.title("🎯 Powerball Picker")
 
 # Fetch and load data
-fetch_powerball_data()
+from powerball_picker import fetch_powerball_data, load_data, pick_numbers
 draws = load_data("powerball_last_year.csv")
 numbers = pick_numbers(draws)
 
