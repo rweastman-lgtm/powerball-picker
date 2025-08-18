@@ -1,5 +1,5 @@
 import streamlit as st
-from powerball_picker.core import fetch_powerball_data, load_data, pick_numbers
+from powerball_picker import fetch_powerball_data, load_data, pick_numbers
 
 st.title("🎯 Powerball Picker")
 
