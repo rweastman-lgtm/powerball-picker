@@ -1,5 +1,6 @@
 import requests
 import csv
+import re
 from datetime import datetime, timedelta
 from collections import Counter
 
@@ -24,12 +25,9 @@ def fetch_powerball_data():
         writer.writerow(["DrawDate", "Numbers"])
         for draw in data:
             date = draw["field_draw_date"]
-         import re  # Add at the top if not already present
-
-nums_raw = draw["field_winning_numbers"]
-nums = re.findall(r'\d+', nums_raw)
-writer.writerow([date, " ".join(nums)])
-
+            nums_raw = draw["field_winning_numbers"]
+            nums = re.findall(r'\d+', nums_raw)
+            writer.writerow([date, " ".join(nums)])
     print(f"✅ Saved {len(data)} draws to powerball_last_year.csv")
     return data
 
@@ -69,9 +67,3 @@ def pick_numbers(draws):
 
     print("🎯 Statistically picked numbers:", top_main + [top_powerball])
     return top_main + [top_powerball]
-
-if __name__ == "__main__":
-    fetch_powerball_data()
-    draws = load_data("powerball_last_year.csv")
-    if draws:
-        pick_numbers(draws)
