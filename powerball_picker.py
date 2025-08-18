@@ -31,7 +31,11 @@ def fetch_powerball_data():
     print(f"✅ Saved {len(data)} draws to powerball_last_year.csv")
     return data
 
-def load_data(filename):
+from csv_cleaner import clean_powerball_csv
+
+def load_data(file_path: str = "powerball_last_year.csv") -> pd.DataFrame:
+    return clean_powerball_csv(file_path)
+
     draws = []
     try:
         with open(filename, newline='') as csvfile:
