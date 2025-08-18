@@ -12,6 +12,7 @@ if numbers:
     st.write(f"Your statistically picked numbers are: {numbers[:5]}")
     st.write(f"Powerball: {numbers[-1]}")
 else:
-    st.warning("No valid Powerball numbers could be generated. Please check the data source.")
+   if not numbers:
+    st.error("No valid Powerball numbers could be generated. Please check the CSV format and ensure it contains recent draws.")
 
 
