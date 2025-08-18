@@ -1,6 +1,7 @@
 import requests
 import csv
 import re
+import pandas as pd  # ✅ Add this
 from datetime import datetime, timedelta
 from collections import Counter
 
