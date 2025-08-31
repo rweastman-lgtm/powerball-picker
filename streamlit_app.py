@@ -1,6 +1,5 @@
 import streamlit as st
 from powerball_picker.fetcher import fetch_powerball_draws
-from powerball_picker.picker import pick_numbers
 
 st.title("🎱 Powerball Picker")
 draws = fetch_powerball_draws()
