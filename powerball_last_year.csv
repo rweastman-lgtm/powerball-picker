@@ -1,1 +1,48 @@
+import argparse
+import requests
+from datetime import datetime
+from typing import List
+
+POWERBALL_URL = "https://data.ny.gov/resource/d6yy-54nr.json"
+
+def fetch_powerball_draws(limit: int) -> List[dict]:
+    try:
+        params = {"$limit": limit, "$order": "draw_date DESC"}
+        response = requests.get(POWERBALL_URL, params=params)
+        response.raise_for_status()
+        data = response.json()
+        return [
+            {
+                "draw_date": datetime.strptime(d["draw_date"], "%Y-%m-%dT%H:%M:%S.%f").date(),
+                "white_balls": [int(n) for n in d["winning_numbers"].split()[:5]],
+                "powerball": int(d["winning_numbers"].split()[5]),
+                "multiplier": int(d.get("multiplier", "1"))
+            }
+            for d in data
+        ]
+    except Exception as e:
+        print(f"[ERROR] Failed to fetch Powerball data: {e}")
+        return []
+
+def print_draws(draws: List[dict]):
+    for i, draw in enumerate(draws, 1):
+        print(f"\nDraw #{i} — {draw['draw_date']}")
+        print(f"  White Balls : {draw['white_balls']}")
+        print(f"  Powerball   : {draw['powerball']}")
+        print(f"  Multiplier  : {draw['multiplier']}x")
+
+def main():
+    parser = argparse.ArgumentParser(description="Fetch past Powerball winning numbers.")
+    parser.add_argument("--draws", type=int, default=10, help="Number of past draws to include")
+    args = parser.parse_args()
+
+    print(f"[INFO] Fetching last {args.draws} Powerball draws...")
+    draws = fetch_powerball_draws(args.draws)
+    if draws:
+        print_draws(draws)
+    else:
+        print("[WARN] No draw data available.")
+
+if __name__ == "__main__":
+    main()
 
